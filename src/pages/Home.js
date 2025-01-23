@@ -1,34 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { getAllPosts } from "../services/api";
-import PostCard from "../componets/PostCard";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
+import PostCard from "../componets/PostCard"
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAllPosts(0, 10, "title")
-    .then((res) => {
-        setPosts(res.data.content || []);
-        setLoading(false);
-    })
-    .catch((err) => {
-        console.error("Error fetching posts:", err);
-        setLoading(false);
-    })
-  }, []);
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/posts?pageNumber=0&pageSize=10&sortBy=postId");
+        console.log(response); 
+        setPosts(response); 
+        console.log("updated",posts)
+      
+      } catch (error) {
+        console.error('Error fetching posts:',error);
+      }
+    };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+    fetchPosts();
+  }, []); 
   return (
-    <div className="post-list">
-      {posts.map((post) => (
-        <PostCard key={post.postId} post={post} />
-      ))}
-    </div>
+    <div>
+    {posts.length > 0 ? (
+      posts.map((post) => <PostCard key={post.postId} post={post} />)
+    ) : (
+      <p>No posts available.</p>
+    )}
+  </div>
   );
+
+  
+
 };
 
+
+
 export default Home;
+//"http://localhost:8080/api/posts?pageNumber=0&pageSize=10&sortBy=postId"
