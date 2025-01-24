@@ -4,8 +4,9 @@ import './App.css';
 import Navbar from "./componets/Navbar";
 import Home from "./pages/Home";
 import PostDetails from "./pages/PostDetails";
-import CreatePost from "./pages/CreatePost";
+
 import SearchResults from "./pages/SearchResults";
+import AddPost from './componets/AddPost';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/posts/:id" element={<PostDetails/>}/>
-      <Route path="/create-post" element={<CreatePost/>}/>
+      <Route path="/add-post" element={<AddPost/>}/>
       <Route path='/search' element={<SearchResults/>}/>
     </Routes>
     </BrowserRouter>

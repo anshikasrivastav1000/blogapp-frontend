@@ -1,13 +1,12 @@
 import React from "react";
+import "./PostCard.css";
 
 const PostCard = ({ post }) => {
   return (
-    <div>
-        <h2>here is post</h2>
-    <h2>{post.title}</h2>
-    <p>{post.content}</p>
-  </div>
-
+    <div className="post-card">
+      <h2 className="post-card-title">{post.title}</h2>
+      <p className="post-card-content">{post.content}</p>
+    </div>
   );
 };
 

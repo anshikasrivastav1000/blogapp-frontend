@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PostCard from "../componets/PostCard"
+import AddPost from "../componets/AddPost";
+import "./Home.css"
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
@@ -9,9 +11,9 @@ const Home = () => {
       try {
         const response = await axios.get("http://localhost:8080/api/posts?pageNumber=0&pageSize=10&sortBy=postId");
         console.log(response); 
-        setPosts(response); 
-        console.log("updated",posts)
-      
+        setPosts(response.data.data.content); 
+        console.log("updated",response.data.data.content)
+        
       } catch (error) {
         console.error('Error fetching posts:',error);
       }
@@ -19,14 +21,18 @@ const Home = () => {
 
     fetchPosts();
   }, []); 
+ 
+
+    
   return (
-    <div>
+    <div  className="post-list">
     {posts.length > 0 ? (
       posts.map((post) => <PostCard key={post.postId} post={post} />)
     ) : (
       <p>No posts available.</p>
     )}
   </div>
+
   );
 
   
